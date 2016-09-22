@@ -20,4 +20,6 @@ public class Config {
 	@ConfigurationOption
 	public static String GIT_BRANCH = "master";
 
+	@ConfigurationOption
+	public static boolean SHOW_BOT_OUTPUT = true;
 }

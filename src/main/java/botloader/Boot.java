@@ -2,7 +2,9 @@ package botloader;
 
 import com.wezinkhof.configuration.ConfigurationBuilder;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -13,6 +15,7 @@ public class Boot {
 		new ConfigurationBuilder(Config.class, new File("boot.cfg")).build();
 		if (!Config.APP_ENABLED) {
 			System.out.println("Boot not enabled, see boot.cfg for the app_enabled setting");
+			System.exit(0);
 		}
 		File productionJarFile = new File(Config.BOT_JAR_LOCATION);
 		if (!productionJarFile.exists()) {
@@ -23,9 +26,17 @@ public class Boot {
 
 		while (true) {
 			ProcessBuilder builder = new ProcessBuilder();
-			builder.command("java", "-jar", productionJarFile.getAbsolutePath());
-
+			builder.redirectErrorStream(true);
+			builder.command(new String[]{"java", "-jar", productionJarFile.getAbsolutePath()});
 			Process botProcess = builder.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(botProcess.getInputStream()));
+			String line;
+			System.out.println("starting process");
+			if (Config.SHOW_BOT_OUTPUT) {
+				while ((line = reader.readLine()) != null) {
+					System.out.println(line);
+				}
+			}
 			botProcess.waitFor();
 			ExitCode exitCode = ExitCode.fromCode(botProcess.exitValue());
 			switch (exitCode) {
@@ -49,6 +60,7 @@ public class Boot {
 					System.exit(0);
 				default:
 					System.out.println("Not sure what to do :(, exiting!");
+					System.out.println("Exit value: " + botProcess.exitValue());
 					System.exit(0);
 					break;
 			}

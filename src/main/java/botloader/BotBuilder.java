@@ -61,10 +61,10 @@ public class BotBuilder {
 	public static boolean build() throws IOException, InterruptedException {
 		File directory = new File(Config.PROJECT_BUILD_LOCATION);
 		ProcessBuilder pb;
-		String line;
 		File pomFile = new File(directory.getAbsoluteFile() + "/pom.xml");
-		pb = makebuilder("cmd", "/c", "mvn", "-f", pomFile.getAbsolutePath(), "clean", "process-resources", "assembly:single");
+		pb = makebuilder("cmd", "/c", "mvn", "-f", pomFile.getAbsolutePath(), "clean", "process-resources", "compile", "assembly:single");
 		Process mvnProcess = pb.start();
+		String line;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(mvnProcess.getInputStream()));
 		while ((line = reader.readLine()) != null) {
 			System.out.println(line);
@@ -97,8 +97,7 @@ public class BotBuilder {
 			Files.move(currentProduction, currentBackup);
 		}
 		File directory = new File(Config.PROJECT_BUILD_LOCATION + "/target");
-		File mvnTarget = new File(directory.getAbsoluteFile() + "/target");
-		File[] files = mvnTarget.listFiles((dir, name) -> name.endsWith(".jar"));
+		File[] files = directory.listFiles((dir, name) -> name.endsWith(".jar"));
 		if (files.length > 0) {
 			Files.move(files[0], currentProduction);
 			return true;

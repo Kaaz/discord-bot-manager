@@ -2,5 +2,7 @@
 target
 *.iml
 boot.cfg
+application.cfg
 log/
 src/main/resources/logback.xml
+bot.jar
