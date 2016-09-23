@@ -27,7 +27,7 @@ public class Boot {
 		while (true) {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.redirectErrorStream(true);
-			builder.command(new String[]{"java", "-jar", productionJarFile.getAbsolutePath()});
+			builder.command("java", "-jar", productionJarFile.getAbsolutePath());
 			Process botProcess = builder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(botProcess.getInputStream()));
 			String line;
