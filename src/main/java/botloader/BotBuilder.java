@@ -20,7 +20,6 @@ public class BotBuilder {
 		System.out.println("PROCESS: " + Joiner.on(" ").join(arguments));
 		ProcessBuilder builder = new ProcessBuilder().command(arguments);
 		builder.redirectErrorStream(true);
-		Process process = null;
 		return builder;
 	}
 
