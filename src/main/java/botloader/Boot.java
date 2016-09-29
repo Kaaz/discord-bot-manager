@@ -23,22 +23,26 @@ public class Boot {
 			BotBuilder.build();
 			BotBuilder.copyBuildJarToProduction();
 		}
-
+		ExitCode exitCode;
 		while (true) {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.redirectErrorStream(true);
 			builder.command("java", "-jar", productionJarFile.getAbsolutePath());
 			Process botProcess = builder.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(botProcess.getInputStream()));
-			String line;
-			System.out.println("starting process");
-			if (Config.SHOW_BOT_OUTPUT) {
-				while ((line = reader.readLine()) != null) {
-					System.out.println(line);
+			try (
+					InputStreamReader inputStreamReader = new InputStreamReader(botProcess.getInputStream());
+					BufferedReader reader = new BufferedReader(inputStreamReader)
+			) {
+				String line;
+				System.out.println("starting process");
+				if (Config.SHOW_BOT_OUTPUT) {
+					while ((line = reader.readLine()) != null) {
+						System.out.println(line);
+					}
 				}
+				botProcess.waitFor();
+				exitCode = ExitCode.fromCode(botProcess.exitValue());
 			}
-			botProcess.waitFor();
-			ExitCode exitCode = ExitCode.fromCode(botProcess.exitValue());
 			switch (exitCode) {
 				case SHITTY_CONFIG:
 					System.out.println("Fix the bot's config first!");

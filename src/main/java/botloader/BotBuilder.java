@@ -45,10 +45,11 @@ public class BotBuilder {
 			System.out.println("Update process took too long");
 			throw new RuntimeException("Update process took too long");
 		}
-		gitProcess.destroy();
 		while ((line = reader.readLine()) != null) {
 			System.out.println(line);
 		}
+		reader.close();
+		gitProcess.destroy();
 	}
 
 	/**
@@ -69,6 +70,7 @@ public class BotBuilder {
 		while ((line = reader.readLine()) != null) {
 			System.out.println(line);
 		}
+		reader.close();
 		if (!mvnProcess.waitFor(2, TimeUnit.MINUTES)) {
 			System.out.println("Update process took too long");
 			throw new RuntimeException("Update process took too long");
