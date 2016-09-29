@@ -64,6 +64,7 @@ public class Boot {
 					System.exit(0);
 					break;
 			}
+			botProcess.destroy();
 		}
 	}
 }

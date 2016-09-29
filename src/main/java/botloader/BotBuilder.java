@@ -46,6 +46,7 @@ public class BotBuilder {
 			System.out.println("Update process took too long");
 			throw new RuntimeException("Update process took too long");
 		}
+		gitProcess.destroy();
 		while ((line = reader.readLine()) != null) {
 			System.out.println(line);
 		}
@@ -73,6 +74,7 @@ public class BotBuilder {
 			System.out.println("Update process took too long");
 			throw new RuntimeException("Update process took too long");
 		}
+		mvnProcess.destroy();
 		File mvnTarget = new File(directory.getAbsoluteFile() + "/target");
 		File[] files = mvnTarget.listFiles((dir, name) -> name.endsWith(".jar"));
 		if (files.length == 0) {
