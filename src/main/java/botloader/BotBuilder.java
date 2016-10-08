@@ -34,9 +34,17 @@ public class BotBuilder {
 		File[] dirContent = directory.listFiles();
 		ProcessBuilder pb;
 		if (!directory.exists() || (dirContent == null || dirContent.length == 0)) {
-			pb = makebuilder("cmd", "/c", "git", "clone", Config.GIT_REPOSITORY, Config.PROJECT_BUILD_LOCATION);
+			if (Boot.isWindows) {
+				pb = makebuilder("cmd", "/c", "git", "clone", Config.GIT_REPOSITORY, Config.PROJECT_BUILD_LOCATION);
+			} else {
+				pb = makebuilder("git", "clone", Config.GIT_REPOSITORY, Config.PROJECT_BUILD_LOCATION);
+			}
 		} else {
-			pb = makebuilder("cmd", "/c", "git", "-C", Config.PROJECT_BUILD_LOCATION, "pull", "origin", Config.GIT_BRANCH);
+			if (Boot.isWindows) {
+				pb = makebuilder("cmd", "/c", "git", "-C", Config.PROJECT_BUILD_LOCATION, "pull", "origin", Config.GIT_BRANCH);
+			} else {
+				pb = makebuilder("git", "-C", Config.PROJECT_BUILD_LOCATION, "pull", "origin", Config.GIT_BRANCH);
+			}
 		}
 		Process gitProcess = pb.start();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(gitProcess.getInputStream()));
@@ -63,7 +71,11 @@ public class BotBuilder {
 		File directory = new File(Config.PROJECT_BUILD_LOCATION);
 		ProcessBuilder pb;
 		File pomFile = new File(directory.getAbsoluteFile() + "/pom.xml");
-		pb = makebuilder("cmd", "/c", "mvn", "-f", pomFile.getAbsolutePath(), "clean", "process-resources", "compile", "assembly:single");
+		if (Boot.isWindows) {
+			pb = makebuilder("cmd", "/c", "mvn", "-f", pomFile.getAbsolutePath(), "clean", "process-resources", "compile", "assembly:single");
+		} else {
+			pb = makebuilder("mvn", "-f", pomFile.getAbsolutePath(), "clean", "process-resources", "compile", "assembly:single");
+		}
 		Process mvnProcess = pb.start();
 		String line;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(mvnProcess.getInputStream()));
