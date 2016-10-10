@@ -25,4 +25,22 @@ public class Config {
 
 	@ConfigurationOption
 	public static boolean SHOW_BOT_OUTPUT = true;
+
+	@ConfigurationOption
+	public static boolean EMAIL_ENABLED = true;
+
+	@ConfigurationOption
+	public static String EMAIL_DEFAULT_SUBJECT = "[DISCORD] [BOT] - Generic Error";
+
+	//account info to send emails though gmail
+	@ConfigurationOption
+	public static String EMAIL_USERNAME = "gmail_username";
+
+	@ConfigurationOption
+	public static String EMAIL_PASSWORD = "gmail_password";
+
+	//comma seperated for multiple
+	@ConfigurationOption
+	public static String EMAIL_RECIPIENTS = "recipients";
+
 }

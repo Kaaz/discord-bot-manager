@@ -6,7 +6,7 @@
 
 	<groupId>com.github.MaikWezinkhof</groupId>
 	<artifactId>discord-bot-loader</artifactId>
-	<version>0.0.3</version>
+	<version>0.1.0</version>
 	<repositories>
 		<repository>
 			<id>jitpack.io</id>
@@ -60,9 +60,14 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>LATEST</version>
+		</dependency>
+		<dependency>
 			<groupId>com.github.MaikWezinkhof</groupId>
 			<artifactId>ConfigurationBuilder</artifactId>
-			<version>master-SNAPSHOT</version>
+			<version>0.3</version>
 		</dependency>
 	</dependencies>
 </project>

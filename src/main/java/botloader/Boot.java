@@ -19,6 +19,10 @@ public class Boot {
 			System.out.println("Boot not enabled, see boot.cfg for the app_enabled setting");
 			System.exit(0);
 		}
+
+		Mail.getInstance().send("dit is een test email :)");
+
+		System.exit(0);
 		File productionJarFile = new File(Config.BOT_JAR_LOCATION);
 		if (!productionJarFile.exists()) {
 			BotBuilder.download();
@@ -62,9 +66,11 @@ public class Boot {
 					BotBuilder.copyBuildJarToProduction();
 					break;
 				case GENERIC_ERROR:
+					Mail.getInstance().send("There was an error, the bot stopped running! check the logs");
 					System.out.println("Uhm, unknown error, check the bot's log, exiting for now");
 					System.exit(0);
 				default:
+					Mail.getInstance().send("There was an error with an unknown cause, the bot stopped running! check the logs");
 					System.out.println("Not sure what to do :(, exiting!");
 					System.out.println("Exit value: " + botProcess.exitValue());
 					System.exit(0);
