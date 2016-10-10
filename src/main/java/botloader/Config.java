@@ -8,6 +8,9 @@ public class Config {
 	public static boolean APP_ENABLED = false;
 
 	@ConfigurationOption
+	public static String JAVA_LOCATION = "java";
+
+	@ConfigurationOption
 	public static String BOT_JAR_LOCATION = "bot.jar";
 	@ConfigurationOption
 	public static String BOT_JAR_LOCATION_BACKUP = "bot_backup.jar";

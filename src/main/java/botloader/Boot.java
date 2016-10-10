@@ -27,7 +27,7 @@ public class Boot {
 		while (true) {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.redirectErrorStream(true);
-			builder.command("java", "-jar", productionJarFile.getAbsolutePath());
+			builder.command(Config.JAVA_LOCATION, "-jar", productionJarFile.getAbsolutePath(), "-XX:+UseConcMarkSweepGC");
 			Process botProcess = builder.start();
 			try (
 					InputStreamReader inputStreamReader = new InputStreamReader(botProcess.getInputStream());
