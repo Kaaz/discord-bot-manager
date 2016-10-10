@@ -10,10 +10,12 @@ import java.io.InputStreamReader;
  *
  */
 public class Boot {
+	public static boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
 	public static void main(String... args) throws Exception {
 		new ConfigurationBuilder(Config.class, new File("boot.cfg")).build();
 		if (!Config.APP_ENABLED) {
+
 			System.out.println("Boot not enabled, see boot.cfg for the app_enabled setting");
 			System.exit(0);
 		}
