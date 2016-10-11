@@ -19,10 +19,6 @@ public class Boot {
 			System.out.println("Boot not enabled, see boot.cfg for the app_enabled setting");
 			System.exit(0);
 		}
-
-		Mail.getInstance().send("dit is een test email :)");
-
-		System.exit(0);
 		File productionJarFile = new File(Config.BOT_JAR_LOCATION);
 		if (!productionJarFile.exists()) {
 			BotBuilder.download();
