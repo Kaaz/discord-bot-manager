@@ -69,13 +69,20 @@ public class Mail {
 		if (!Config.EMAIL_ENABLED) {
 			return;
 		}
+		send(Config.EMAIL_DEFAULT_SUBJECT, body);
+	}
+
+	public void send(String title, String body) {
+		if (!Config.EMAIL_ENABLED) {
+			return;
+		}
 		try {
 			String mailText = "";
 			mailText += body;
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(FROM_EMAIL));
 			message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(Config.EMAIL_RECIPIENTS));
-			message.setSubject(Config.EMAIL_DEFAULT_SUBJECT);
+			message.setSubject(Config.EMAIL_PREFIX_SUBJECT + title);
 			message.setText(mailText, "utf-8", "html");
 			Transport.send(message);
 		} catch (MessagingException e) {
