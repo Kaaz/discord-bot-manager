@@ -30,7 +30,10 @@ public class Config {
 	public static boolean EMAIL_ENABLED = true;
 
 	@ConfigurationOption
-	public static String EMAIL_DEFAULT_SUBJECT = "[DISCORD] [BOT] - Generic Error";
+	public static String EMAIL_PREFIX_SUBJECT = "[DISCORD] [BOT] - ";
+
+	@ConfigurationOption
+	public static String EMAIL_DEFAULT_SUBJECT = "Generic Error";
 
 	//account info to send emails though gmail
 	@ConfigurationOption

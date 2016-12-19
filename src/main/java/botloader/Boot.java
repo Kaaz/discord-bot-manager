@@ -5,14 +5,25 @@ import com.wezinkhof.configuration.ConfigurationBuilder;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
  */
 public class Boot {
+	//amount of times to try rebooting the bot
+	public final static int UNPLANNED_RESTART_LIMIT = 10;
+
+	//reset the unplanned restart counter after this time:
+	public final static long RESET_UNPLANNED_AFTER = TimeUnit.MINUTES.toMillis(30);
 	public static boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
+
+	private static int unplannedRestarts = 0;
+	private static long lastUnplannedRestart = 0;
+
 	public static void main(String... args) throws Exception {
+
 		new ConfigurationBuilder(Config.class, new File("boot.cfg")).build();
 		if (!Config.APP_ENABLED) {
 
@@ -53,7 +64,9 @@ public class Boot {
 					System.exit(0);
 					break;
 				case REBOOT:
+					break;
 				case DISCONNECTED:
+					registerUnplannedRestart();
 					System.out.println("to the next iteration we go!");
 					break;
 				case UPDATE:
@@ -62,18 +75,34 @@ public class Boot {
 					BotBuilder.copyBuildJarToProduction();
 					break;
 				case GENERIC_ERROR:
-					Mail.getInstance().send("There was an error, the bot stopped running! check the logs");
+					Mail.getInstance().send("There was an unspecified error, the bot stopped running! check the logs");
 					System.out.println("Uhm, unknown error, check the bot's log, exiting for now");
 					System.exit(0);
 				default:
-					Mail.getInstance().send("There was an error with an unknown cause, the bot stopped running! check the logs");
+					registerUnplannedRestart();
+					Mail.getInstance().send("There was an error with an unknown cause, the bot stopped running! check the logs exitcode=" + botProcess.exitValue());
 					System.out.println("Not sure what to do :(, exiting!");
 					System.out.println("Exit value: " + botProcess.exitValue());
-					System.exit(0);
 					break;
 			}
 			botProcess.destroy();
 			System.gc();
+			if (unplannedRestartLimitHit()) {
+				Mail.getInstance().send("Unplanned restart limit", "Unplanned restart limit hit!");
+			}
 		}
+	}
+
+	private static boolean unplannedRestartLimitHit() {
+		return unplannedRestarts >= UNPLANNED_RESTART_LIMIT;
+	}
+
+	private static void registerUnplannedRestart() {
+		if ((lastUnplannedRestart + RESET_UNPLANNED_AFTER) < System.currentTimeMillis()) {
+			unplannedRestarts = 0;
+		}
+		unplannedRestarts++;
+		lastUnplannedRestart = System.currentTimeMillis();
+
 	}
 }
