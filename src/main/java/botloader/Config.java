@@ -19,7 +19,7 @@ public class Config {
 	public static String PROJECT_BUILD_LOCATION = "H:/projects/discordbot";
 
 	@ConfigurationOption
-	public static String GIT_REPOSITORY = "https://github.com/MaikWezinkhof/DiscordBot";
+	public static String GIT_REPOSITORY = "https://github.com/Kaaz/DiscordBot";
 	@ConfigurationOption
 	public static String GIT_BRANCH = "master";
 
