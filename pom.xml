@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.MaikWezinkhof</groupId>
+	<groupId>com.github.kaaz</groupId>
 	<artifactId>discord-bot-loader</artifactId>
 	<version>0.1.1</version>
 	<repositories>
@@ -65,9 +65,9 @@
 			<version>LATEST</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.MaikWezinkhof</groupId>
+			<groupId>com.github.kaaz</groupId>
 			<artifactId>ConfigurationBuilder</artifactId>
-			<version>0.3</version>
+			<version>c05d1a4455</version>
 		</dependency>
 	</dependencies>
 </project>
