@@ -8,3 +8,6 @@ build
 log/
 src/main/resources/logback.xml
 bot.jar
+bot_backup.jar
+boot.cfg
+out
