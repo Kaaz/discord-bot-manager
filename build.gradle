@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.github.kaaz'
+version = '0.1.1'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+repositories {
+        
+     maven { url "https://jitpack.io" }
+     maven { url "http://jcenter.bintray.com" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'javax.mail', name: 'mail', version:'1.5.0-b01'
+    compile group: 'com.github.Kaaz', name: 'ConfigurationBuilder', version:'0c4957579e'
+}

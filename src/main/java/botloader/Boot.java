@@ -1,6 +1,6 @@
 package botloader;
 
-import com.wezinkhof.configuration.ConfigurationBuilder;
+import com.kaaz.configuration.ConfigurationBuilder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +24,7 @@ public class Boot {
 
 	public static void main(String... args) throws Exception {
 
-		new ConfigurationBuilder(Config.class, new File("boot.cfg")).build();
+		new ConfigurationBuilder(Config.class, new File("boot.cfg")).build(true);
 		if (!Config.APP_ENABLED) {
 
 			System.out.println("Boot not enabled, see boot.cfg for the app_enabled setting");

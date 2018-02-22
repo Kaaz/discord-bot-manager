@@ -3,6 +3,8 @@ target
 *.iml
 boot.cfg
 application.cfg
+build
+.gradle
 log/
 src/main/resources/logback.xml
 bot.jar
